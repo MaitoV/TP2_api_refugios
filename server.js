@@ -1,14 +1,14 @@
 import express from 'express';
-import RouterProductos from './router/productos.js'; 
-import config from 'config';
+import RouterProductos from './router/refugios.js'; 
+import config from './config.js';
 
 const app = express();
 
 //app.use(express.urlencoded({extended:true}));
-//app.use(express.json());
+app.use(express.json());
 //app.use(express.static('public'));
 
-app.use('/api/animalitos', new RouterProductos().start());
+app.use('/api/refugios', new RouterProductos().start());
 
 const server = app.listen(config.PORT, () => console.log('Servidor ApiRestFul escuchando en el puerto ' + config.PORT));
 
