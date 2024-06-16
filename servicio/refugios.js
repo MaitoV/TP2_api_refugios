@@ -1,10 +1,9 @@
 import ModelFactory from '../model/DAO/refugiosFactory.js';
-import config from './../config.js';
 import bcrypt from 'bcryptjs';
 
 class Servicio {
     constructor() {
-        this.modelo = ModelFactory.get(config.MODO_PERSISTENCIA);
+        this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
     }
 
     obtenerRefugios = async (id) => {

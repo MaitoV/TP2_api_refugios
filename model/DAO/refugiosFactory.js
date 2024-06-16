@@ -7,7 +7,7 @@ class ModelFactory {
                 return new ModelMongoDB();
             break;
             default: 
-                return new ModelMem();
+                return new ModelMongoDB();
         }
     }
 }

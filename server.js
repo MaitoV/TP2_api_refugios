@@ -1,7 +1,6 @@
 import express from 'express';
 import RouterRefugios from './router/refugios.js'; 
 import RouterAutenticacion from './router/autenticacion.js'; 
-import config from './config.js';
 import conexionMongoDB from './model/dbMongo.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import dotenv from 'dotenv';
@@ -19,11 +18,11 @@ app.use('/api/autenticacion', new RouterAutenticacion().start());
 
 app.use(errorHandler)
 
-if(config.MODO_PERSISTENCIA === 'MONGODB') {
+if(process.env.MODO_PERSISTENCIA === 'MONGODB') {
     await conexionMongoDB.conectar();
 }
 
-const server = app.listen(config.PORT, () => console.log('Servidor ApiRestFul escuchando en el puerto ' + config.PORT));
+const server = app.listen(process.env.PORT, () => console.log('Servidor ApiRestFul escuchando en el puerto ' + process.env.PORT));
 
 server.on('error', (error) => console.log('Error en servidor: ' + error.message));
 
