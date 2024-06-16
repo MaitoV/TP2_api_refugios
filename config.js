@@ -1,5 +1,5 @@
 const PORT = 8080;
-const MODO_PERSISTENCIA = 'MONGODB'; // 'MEM, MONGODB'
+const MODO_PERSISTENCIA = 'MONGODB'; // 'MONGODB'
 const MONGO_STRING_CONEXION = 'mongodb://127.0.0.1';
 const MONGO_BASE = 'api_refugios';
 

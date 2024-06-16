@@ -1,10 +1,6 @@
 export const errorHandler = (error, req, res, next) => {
     const codigoEstado = error.codigoEstado || 404;
-    const mensaje = error.mensaje || 'contenido no encontrado';
+    const mensaje = error.message || 'contenido no encontrado';
 
-    res.status(codigoEstado).json({
-        estado: 'error',
-        codigoEstado,
-        mensaje,
-    })
+    return res.status(codigoEstado).json({error: mensaje})
 }

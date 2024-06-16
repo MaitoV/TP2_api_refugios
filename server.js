@@ -1,7 +1,12 @@
 import express from 'express';
-import RouterProductos from './router/refugios.js'; 
+import RouterRefugios from './router/refugios.js'; 
+import RouterAutenticacion from './router/autenticacion.js'; 
 import config from './config.js';
 import conexionMongoDB from './model/dbMongo.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
@@ -9,7 +14,10 @@ const app = express();
 app.use(express.json());
 //app.use(express.static('public'));
 
-app.use('/api/refugios', new RouterProductos().start());
+app.use('/api/refugios', new RouterRefugios().start());
+app.use('/api/autenticacion', new RouterAutenticacion().start());
+
+app.use(errorHandler)
 
 if(config.MODO_PERSISTENCIA === 'MONGODB') {
     await conexionMongoDB.conectar();

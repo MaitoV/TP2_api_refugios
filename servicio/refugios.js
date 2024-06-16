@@ -1,5 +1,6 @@
 import ModelFactory from '../model/DAO/refugiosFactory.js';
 import config from './../config.js';
+import bcrypt from 'bcryptjs';
 
 class Servicio {
     constructor() {
@@ -18,6 +19,11 @@ class Servicio {
     }
     
     guardarRefugio = async (refugio) => {
+        const {contrasenia} = refugio;
+        const rondasDeEncriptacion = parseInt(process.env.BCRYPT_N_ENCRIPTACION);
+        const nivelEncriptacion = await bcrypt.genSalt(rondasDeEncriptacion); 
+        const contraseniaEncriptada = await bcrypt.hash(contrasenia, nivelEncriptacion);
+        refugio.contrasenia = contraseniaEncriptada;
         const refugioGuardado = await this.modelo.guardarRefugio(refugio);
         return refugioGuardado;
     }
