@@ -1,6 +1,7 @@
 import { Router } from "express";
 import RefugiosRouter from './refugios.js';
 import AutenticacionRouter from './autenticacion.js';
+import AnimalitosRouter from './animales.js'
 
 class IndexRouter {
     constructor() {
@@ -9,6 +10,7 @@ class IndexRouter {
     }
     inicializarRutas() {
         this.router.use('/refugios', new RefugiosRouter().start());
+        this.router.use('/animalitos', new AnimalitosRouter().start());
         this.router.use('/autenticacion', new AutenticacionRouter().start());
     }
     start() {

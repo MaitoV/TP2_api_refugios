@@ -15,4 +15,14 @@ export class ErrorAutenticacionCamposVacios extends ErrorPersonalizado {
       super(mensaje, 400);
     }
 }
+export class ErrorSinToken extends ErrorPersonalizado {
+  constructor(mensaje = 'No tiene permisos para realizar esta acción. Proporcione su token') {
+    super(mensaje, 401);
+  }
+}
+export class ErrorTokenInvalido extends ErrorPersonalizado {
+  constructor(mensaje = 'No tiene permisos para realizar esta acción. Provea un token válido') {
+    super(mensaje, 401);
+  }
+}
 
