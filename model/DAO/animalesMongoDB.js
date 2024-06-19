@@ -13,20 +13,25 @@ class ModelMongoDB {
         const refugios = await conexionMongoDB.db.collection('refugios').find({}).toArray();
         return refugios;
     }
-    obtenerRefugio = async (id) => {
-        if(!conexionMongoDB.conexionOk) return {}
-        const refugio = await conexionMongoDB.db.collection('refugios').findOne({_id: new ObjectId(id)});
-        return refugio;
     }*/
+    obtenerAnimal = async (id) => {
+        if(!conexionMongoDB.conexionOk) return {}
+        const animal = await conexionMongoDB.db.collection('animales').findOne({_id: new ObjectId(id)});
+        return animal;
+    }
+    obtenerAdoptables = async () => {
+        const disponibles = await conexionMongoDB.db.collection('animales').find({ estado: 'disponible' }).toArray();
+        return disponibles;
+    }
     guardarAnimal = async (animal) => {
         if(!conexionMongoDB.conexionOk) return {}
         animal.refugioID = new ObjectId(animal.refugioID);
         const animalConID = await conexionMongoDB.db.collection('animales').insertOne(animal);
         return animalConID;
     }
-    /*actualizarRefugio = async (id, refugio) => {
+    actualizarAnimal = async (id, animal) => {
         if(!conexionMongoDB.conexionOk) return {}
-    }*/
+    }
 }
 
 export default ModelMongoDB;

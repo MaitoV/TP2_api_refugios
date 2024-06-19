@@ -5,12 +5,15 @@ class Controlador {
     constructor() {
         this.servicio = new Servicio();
     }
-    obtenerAdoptables = async (req, res) => {
+    obtenerAnimal = async (req, res) => {
         const {id} = req.params;
-        const adoptables = await this.servicio.obtenerRefugios(id);
-        res.json(adoptables);
+        const animal = await this.servicio.obtenerAnimal(id);
+        res.json(animal);
     }
-    
+    obtenerAdoptables = async (req, res) => {
+        const animalesDisponibles = await this.servicio.obtenerAdoptables();
+        res.json(animalesDisponibles);
+    }
     guardarAnimal = async (req, res, next) => {
         try {
             const refugioID = req.user.id;
@@ -26,9 +29,9 @@ class Controlador {
     }
     actualizarAnimal = async (req, res) => {
         const {id} = req.params;
-        const refugio = req.body;
-        const refugioActualizado = await this.servicio.actualizarRefugio(id, refugio);
-        res.json(refugioActualizado);
+        const animal = req.body;
+        const animalActualizado = await this.servicio.actualizarAnimal(id, animal);
+        res.json(animalActualizado);
     }
     eliminarAnimal = async (req, res) => {
         const {id} = req.params;

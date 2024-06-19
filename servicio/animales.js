@@ -5,25 +5,24 @@ class Servicio {
         this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
     }
 
-    /*obtenerRefugios = async (id) => {
-       if(id) {
-            const refugioEncontrado = await this.modelo.obtenerRefugio(id);
-            return refugioEncontrado;
-        }
-        else {
-            const refugios = await this.modelo.obtenerRefugios();
-            return refugios;
-        }
-    }*/
+    obtenerAnimal = async (id) => {
+        const animalEncontrado = await this.modelo.obtenerAnimal(id);
+        return animalEncontrado;
+    }
+
+    obtenerAdoptables = async () => {
+        const animalesDisponibles = await this.modelo.obtenerAdoptables();
+        return animalesDisponibles
+    }
     
     guardarAnimal = async (animal) => {
         const animalGuardado = await this.modelo.guardarAnimal(animal);
         return animalGuardado;
     }
     
-    /*actualizarRefugio = async (id, refugio) => {
-        const refugioActualizado = await this.modelo.actualizarRefugio(id, refugio);
-        return refugioActualizado;
+    /*actualizarAnimal = async (id, animal) => {
+        const animalActualizado = await this.modelo.actualizarAnimal(id, animal);
+        return animalActualizado;
     }*/
 }
 

@@ -9,7 +9,8 @@ class Router {
         this.autenticacion = AutenticacionMiddleware;
     }
     start() {
-        this.router.get('/:id?', this.controlador.obtenerAdoptables);
+        this.router.get('/adoptables', this.controlador.obtenerAdoptables);
+        this.router.get('/:id', this.controlador.obtenerAnimal);
         this.router.post('/', this.autenticacion, this.controlador.guardarAnimal);
         this.router.put('/:id', this.autenticacion,this.controlador.actualizarAnimal); 
         this.router.delete('/:id', this.autenticacion,this.controlador.eliminarAnimal); 
