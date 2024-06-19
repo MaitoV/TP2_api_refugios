@@ -19,7 +19,7 @@ class Servicio {
     
     guardarRefugio = async (refugio) => {
         const {contrasenia} = refugio;
-        refugio.contrasenia = encriptarContrasenia(contrasenia);
+        refugio.contrasenia = await encriptarContrasenia(contrasenia);
         const refugioGuardado = await this.modelo.guardarRefugio(refugio);
         return refugioGuardado;
     }

@@ -1,9 +1,8 @@
 import express from 'express';
-import RouterRefugios from './router/refugios.js'; 
-import RouterAutenticacion from './router/autenticacion.js'; 
 import conexionMongoDB from './model/dbMongo.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import dotenv from 'dotenv';
+import IndexRouter from './router/index.js';
 
 dotenv.config();
 
@@ -13,8 +12,7 @@ const app = express();
 app.use(express.json());
 //app.use(express.static('public'));
 
-app.use('/api/refugios', new RouterRefugios().start());
-app.use('/api/autenticacion', new RouterAutenticacion().start());
+app.use('/api', new IndexRouter().start());
 
 app.use(errorHandler)
 
