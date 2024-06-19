@@ -25,4 +25,9 @@ export class ErrorTokenInvalido extends ErrorPersonalizado {
     super(mensaje, 401);
   }
 }
+export class ErrorAnimalInvalido extends ErrorPersonalizado {
+  constructor(mensaje = 'Los campos: nombre, tipo, estado y edad son obligatorios') {
+    super(mensaje, 401);
+  }
+}
 
