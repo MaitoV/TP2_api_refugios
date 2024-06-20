@@ -17,8 +17,8 @@ class Controlador {
     guardarAnimal = async (req, res, next) => {
         try {
             const refugioID = req.user.id;
-            const {nombre, edad, tipo, estado} = req.body;
-            if(nombre === '' || edad === '' || tipo === '' || estado == '') throw new ErrorAnimalInvalido();
+            const animal = req.body;
+            if(animal === '') throw new ErrorAnimalInvalido();
             req.body.refugioID = refugioID;
             const animalGuardado = await this.servicio.guardarAnimal(req.body);
             res.json(animalGuardado);
@@ -27,17 +27,27 @@ class Controlador {
             next(error);
         }
     }
-    actualizarAnimal = async (req, res) => {
-        const {id} = req.params;
-        const animal = req.body;
-        const animalActualizado = await this.servicio.actualizarAnimal(id, animal);
-        res.json(animalActualizado);
+    actualizarAnimal = async (req, res, next) => {
+        try {
+            const {id} = req.params;
+            const animal = req.body;
+            const refugioID = req.user.id;
+            const animalActualizado = await this.servicio.actualizarAnimal(id, animal, refugioID);
+            res.json(animalActualizado);
+        } catch(error) {
+            next(error);
+        }
     }
-    eliminarAnimal = async (req, res) => {
-        const {id} = req.params;
-        const refugio = req.body;
-        const refugioActualizado = await this.servicio.actualizarRefugio(id, refugio);
-        res.json(refugioActualizado);
+    eliminarAnimal = async (req, res, next) => {
+        try {
+            const {id} = req.params;
+            const refugioID = req.user.id;
+            const animalEliminado = await this.servicio.eliminarAnimal(id, refugioID);
+            res.json(animalEliminado);
+
+        } catch (error) {
+            next(error)
+        }
     }
 
 }

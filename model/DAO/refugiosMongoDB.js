@@ -15,7 +15,7 @@ class ModelMongoDB {
     obtenerRefugio = async (id) => {
         if(!conexionMongoDB.conexionOk) return {}
         const refugio = await conexionMongoDB.db.collection('refugios').findOne({_id: new ObjectId(id)});
-        return refugio;
+        return refugio || {};
     }
     guardarRefugio = async (refugio) => {
         if(!conexionMongoDB.conexionOk) return {}
@@ -24,6 +24,9 @@ class ModelMongoDB {
     }
     actualizarRefugio = async (id, refugio) => {
         if(!conexionMongoDB.conexionOk) return {}
+        await conexionMongoDB.db.collection('refugios').updateOne({_id: new ObjectId(id)},{ $set: refugio })
+        const refugioActualizado = await this.obtenerRefugio(id)
+        return refugioActualizado;
     }
 }
 

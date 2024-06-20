@@ -17,7 +17,7 @@ class ModelMongoDB {
     obtenerAnimal = async (id) => {
         if(!conexionMongoDB.conexionOk) return {}
         const animal = await conexionMongoDB.db.collection('animales').findOne({_id: new ObjectId(id)});
-        return animal;
+        return animal || {};
     }
     obtenerAdoptables = async () => {
         const disponibles = await conexionMongoDB.db.collection('animales').find({ estado: 'disponible' }).toArray();
@@ -31,6 +31,16 @@ class ModelMongoDB {
     }
     actualizarAnimal = async (id, animal) => {
         if(!conexionMongoDB.conexionOk) return {}
+
+        await conexionMongoDB.db.collection('animales').updateOne({_id: new ObjectId(id)},{ $set: animal });
+        const animalActualizado = await this.obtenerAnimal(id);
+        return animalActualizado;
+    }
+    eliminarAnimal = async (id) => {
+        if(!conexionMongoDB.conexionOk) return {}
+
+        const animalEliminado = await conexionMongoDB.db.collection('animales').deleteOne({ _id: new ObjectId(id) });
+        return animalEliminado;
     }
 }
 

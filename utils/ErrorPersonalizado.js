@@ -30,4 +30,9 @@ export class ErrorAnimalInvalido extends ErrorPersonalizado {
     super(mensaje, 401);
   }
 }
+export class ErrorRefugioNoPropietario extends ErrorPersonalizado {
+  constructor(mensaje = 'No tiene permisos para modificar un animalito que no es propiedad de su refugio') {
+    super(mensaje, 401);
+  }
+}
 

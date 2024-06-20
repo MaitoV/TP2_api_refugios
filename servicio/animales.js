@@ -1,4 +1,5 @@
 import ModelFactory from '../model/DAO/animalesFactory.js';
+import { ErrorRefugioNoPropietario } from '../utils/errorPersonalizado.js';
 
 class Servicio {
     constructor() {
@@ -20,10 +21,31 @@ class Servicio {
         return animalGuardado;
     }
     
-    /*actualizarAnimal = async (id, animal) => {
-        const animalActualizado = await this.modelo.actualizarAnimal(id, animal);
+    actualizarAnimal = async (animalID, animal, refugioID) => {
+        const esRefugioPropietario = await this.#esRefugioPropietario(refugioID, animalID);
+        if(!esRefugioPropietario) {
+            throw new ErrorRefugioNoPropietario();
+        }
+        const animalActualizado = await this.modelo.actualizarAnimal(animalID, animal);
         return animalActualizado;
-    }*/
+    }
+    eliminarAnimal = async (animalID, refugioID) => {
+        const esRefugioPropietario = await this.#esRefugioPropietario(refugioID, animalID);
+        if(!esRefugioPropietario) {
+            throw new ErrorRefugioNoPropietario();
+        }
+        const animalEliminado = await this.modelo.eliminarAnimal(animalID);
+        return animalEliminado;
+    }
+    #esRefugioPropietario = async (refugioID, animalID) => {
+        let esPropietario = false;
+
+        const animalEncontrado = await this.modelo.obtenerAnimal(animalID);
+        const refugioPropietario = animalEncontrado.refugioID.toString();
+        esPropietario = refugioPropietario === refugioID;
+
+        return esPropietario;
+    }
 }
 
 export default Servicio;
