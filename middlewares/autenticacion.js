@@ -1,5 +1,6 @@
 import { ErrorSinToken, ErrorTokenInvalido } from "../utils/errorPersonalizado.js";
 import jwt from "jsonwebtoken";
+import config from './../config.js';
 
 const autenticacionMiddleware = (req, res, next) => {
     try {
@@ -11,7 +12,7 @@ const autenticacionMiddleware = (req, res, next) => {
     
         if(!token) throw new ErrorTokenInvalido();
     
-        const tokenDecodificado = jwt.verify(token, process.env.JWT_SECRET);
+        const tokenDecodificado = jwt.verify(token, config.JWT_SECRET);
         req.user = tokenDecodificado;
     
         next();

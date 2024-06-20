@@ -1,26 +1,43 @@
 import express from 'express';
+import indexRouter from './router/index.js';
 import conexionMongoDB from './model/dbMongo.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import dotenv from 'dotenv';
-import IndexRouter from './router/index.js';
 
-dotenv.config();
+class Server {
+    constructor(port, persistencia) {
+        this.port = port;
+        this.persistencia = persistencia;
 
-const app = express();
+        this.app = express()
+        this.server = null;
+    }
+    async start() {
+        //this.app.use(express.urlencoded({extended:true}));
+        //this.app.use(express.static('public'));
+        this.app.use(express.json());
 
-//app.use(express.urlencoded({extended:true}));
-app.use(express.json());
-//app.use(express.static('public'));
+        this.app.use('/api', new indexRouter().start());
+        this.app.use(errorHandler);
 
-app.use('/api', new IndexRouter().start());
+        if(this.persistencia === 'MONGODB') {
+            await conexionMongoDB.conectar();
+        }
 
-app.use(errorHandler)
+        const PORT = this.port;
+        this.server = this.app.listen(PORT, () => console.log(`Servidor ApiRestFul escuchando en el puerto ${PORT}`));
+        this.server.on('error', error => console.log(`Error en servidor: ${error.message}`));
 
-if(process.env.MODO_PERSISTENCIA === 'MONGODB') {
-    await conexionMongoDB.conectar();
+        return this.app;
+    }
+    async stop() {
+        if(this.server) {
+            this.server.close()
+            await conexionMongoDB.desconectar()
+            this.server = null
+        }
+    }
 }
 
-const server = app.listen(process.env.PORT, () => console.log('Servidor ApiRestFul escuchando en el puerto ' + process.env.PORT));
+export default Server;
 
-server.on('error', (error) => console.log('Error en servidor: ' + error.message));
 
