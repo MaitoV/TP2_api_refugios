@@ -1,5 +1,5 @@
 import Servicio from '../servicio/animales.js';
-import { ErrorAnimalInvalido } from '../utils/errorPersonalizado.js';
+import { ErrorAnimalInvalido, ErrorArchivoFaltante } from '../utils/errorPersonalizado.js';
 
 class Controlador {
     constructor() {
@@ -24,6 +24,19 @@ class Controlador {
             res.json(animalGuardado);
 
         } catch (error) {
+            next(error);
+        }
+    }
+    guardarAnimalitos = async (req, res, next) => {
+        try{
+            const archivo = req.file;
+            if(!archivo) throw new ErrorArchivoFaltante();
+
+            const refugioID = req.user.id;
+            const animalitosGuardados = await this.servicio.guardarAnimalitos(archivo, refugioID);
+
+            res.json(animalitosGuardados);
+        } catch(error) {
             next(error);
         }
     }

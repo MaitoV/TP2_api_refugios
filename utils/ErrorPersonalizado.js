@@ -35,4 +35,13 @@ export class ErrorRefugioNoPropietario extends ErrorPersonalizado {
     super(mensaje, 401);
   }
 }
-
+export class ErrorArchivoFaltante extends ErrorPersonalizado {
+  constructor(mensaje = 'No se ha subido ningún archivo') {
+    super(mensaje, 400)
+  }
+}
+export class ErrorArchivoIncorrecto extends ErrorPersonalizado {
+  constructor(mensaje = 'Solo se permiten archivos de tipo Excel (.xls, .xlsx)') {
+    super(mensaje, 400)
+  }
+}

@@ -26,7 +26,8 @@ class ModelMongoDB {
     guardarAnimal = async (animal) => {
         if(!conexionMongoDB.conexionOk) return {}
         animal.refugioID = new ObjectId(animal.refugioID);
-        const animalConID = await conexionMongoDB.db.collection('animales').insertOne(animal);
+        const animalGuardadoID = await conexionMongoDB.db.collection('animales').insertOne(animal);
+        const animalConID = this.obtenerAnimal(animalGuardadoID.insertedId.toString());
         return animalConID;
     }
     actualizarAnimal = async (id, animal) => {
