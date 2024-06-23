@@ -21,6 +21,16 @@ class Controlador {
         const refugioActualizado = await this.servicio.actualizarRefugio(id, refugio);
         res.json(refugioActualizado);
     }
+    obtenerInforme = async (req, res, error) => {
+        try {
+            const refugioID = req.user.id;
+            const informe = await this.servicio.obtenerInforme(refugioID);
+            res.json(informe);
+            
+        } catch (error) {
+            next(error)
+        }
+    }
 
 }
 

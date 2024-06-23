@@ -1,18 +1,20 @@
-import ModelFactory from '../model/DAO/refugiosFactory.js';
+import RefugiosFactory from '../model/DAO/refugiosFactory.js';
+import AnimalesFactory from '../model/DAO/animalesFactory.js';
 import { encriptarContrasenia } from '../utils/encriptarContrasenia.js';
 
 class Servicio {
     constructor() {
-        this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
+        this.modeloRefugio = RefugiosFactory.get(process.env.MODO_PERSISTENCIA);
+        this.modeloAnimales = AnimalesFactory.get(process.env.MODO_PERSISTENCIA);
     }
 
     obtenerRefugios = async (id) => {
        if(id) {
-            const refugioEncontrado = await this.modelo.obtenerRefugio(id);
+            const refugioEncontrado = await this.modeloRefugio.obtenerRefugio(id);
             return refugioEncontrado;
         }
         else {
-            const refugios = await this.modelo.obtenerRefugios();
+            const refugios = await this.modeloRefugio.obtenerRefugios();
             return refugios;
         }
     }
@@ -20,13 +22,45 @@ class Servicio {
     guardarRefugio = async (refugio) => {
         const {contrasenia} = refugio;
         refugio.contrasenia = await encriptarContrasenia(contrasenia);
-        const refugioGuardado = await this.modelo.guardarRefugio(refugio);
+        const refugioGuardado = await this.modeloRefugio.guardarRefugio(refugio);
         return refugioGuardado;
     }
     
     actualizarRefugio = async (id, refugio) => {
-        const refugioActualizado = await this.modelo.actualizarRefugio(id, refugio);
+        const refugioActualizado = await this.modeloRefugio.actualizarRefugio(id, refugio);
         return refugioActualizado;
+    }
+    obtenerInforme = async (refugioID) => {
+        const animales = await this.modeloAnimales.obtenerAnimalesPorRefugio(refugioID);
+        const estadisticas = this.#procesarEstadisticas(animales);
+        const mensaje = this.#formatearMensajeEstadisticas(estadisticas);
+        return mensaje;
+        
+    }
+    #procesarEstadisticas = (animales) => {
+        const estadisticas = {totales: {} };
+        for(let animal of animales) {
+            const tipo = animal.tipo;
+            const estado = animal.estado;
+
+            estadisticas.totales[estado] ??= 0;
+            estadisticas.totales[estado] += 1;
+            estadisticas[tipo] ??= {};
+            estadisticas[tipo][estado] ??= 0;
+            estadisticas[tipo][estado] ++;
+        }
+        return estadisticas;
+    }
+    #formatearMensajeEstadisticas = (estadisticas) => {
+        let mensaje = `******** Informe ${new Date().toString()} ********** \n `;
+        Object.entries(estadisticas).forEach(([animal, estados]) => {
+            mensaje += `${animal}: \n `;
+            Object.entries(estados).forEach(([estado, cantidad]) => {
+              mensaje += `  ${estado}: ${cantidad}\n `;
+            });
+        });
+        return mensaje;
+
     }
 }
 

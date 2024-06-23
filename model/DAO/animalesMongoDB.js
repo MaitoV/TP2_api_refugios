@@ -2,18 +2,6 @@ import { ObjectId } from "mongodb";
 import conexionMongoDB from "../dbMongo.js"
 
 class ModelMongoDB {
-    constructor() {}
-    /*obtenerRefugioPorEmail = async (email) => {
-        if(!conexionMongoDB.conexionOk) return {}
-        const refugio = await conexionMongoDB.db.collection('refugios').findOne({email: email});
-        return refugio;
-    }
-    obtenerRefugios = async () => {
-        if(!conexionMongoDB.conexionOk) return []
-        const refugios = await conexionMongoDB.db.collection('refugios').find({}).toArray();
-        return refugios;
-    }
-    }*/
     obtenerAnimal = async (id) => {
         if(!conexionMongoDB.conexionOk) return {}
         const animal = await conexionMongoDB.db.collection('animales').findOne({_id: new ObjectId(id)});
@@ -22,6 +10,21 @@ class ModelMongoDB {
     obtenerAdoptables = async () => {
         const disponibles = await conexionMongoDB.db.collection('animales').find({ estado: 'disponible' }).toArray();
         return disponibles;
+    }
+    obtenerAnimalesPorRefugio = async (refugioID) => {
+        if(!conexionMongoDB.conexionOk) return []
+        const animales = await  await conexionMongoDB.db.collection('animales').find({ 
+            refugioID: new ObjectId(refugioID)
+        }).toArray();
+        return animales;
+    }
+    obtenerAdoptadosPorRefugio = async (refugioID) => {
+        if(!conexionMongoDB.conexionOk) return []
+        const adoptados = await  await conexionMongoDB.db.collection('animales').find({ 
+            estado: 'adoptado',
+            refugioID: refugioID 
+        }).toArray();
+        return adoptados;
     }
     guardarAnimal = async (animal) => {
         if(!conexionMongoDB.conexionOk) return {}

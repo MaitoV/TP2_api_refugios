@@ -1,6 +1,6 @@
-import multer from "multer";
+import multer from 'multer';
 import path from 'path';
-import { ErrorArchivoIncorrecto } from "./errorPersonalizado.js";
+import { ErrorArchivoIncorrecto } from "../utils/errorPersonalizado.js";
 
 const storage = multer.memoryStorage();
 
@@ -15,9 +15,9 @@ const filtroArchivo = (req, file, cb) => {
     }
 };
 
-const carga = multer({ 
+const cargarUnArchivoExcel = multer({ 
     storage: storage,
     fileFilter: filtroArchivo
-});
+}).single('file');
 
-export default carga;
+export default cargarUnArchivoExcel;
