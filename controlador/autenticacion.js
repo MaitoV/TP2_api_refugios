@@ -7,6 +7,7 @@ class Controlador {
     }
     ingresar = async (req, res, next) => {
         try {
+            console.log(req.body)
             const {email, contrasenia} = req.body;
             if(email === '' || contrasenia === '') {
                 throw new ErrorAutenticacionCamposVacios();

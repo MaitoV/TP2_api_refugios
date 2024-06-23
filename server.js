@@ -4,6 +4,7 @@ import conexionMongoDB from './model/dbMongo.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import Vistas from './router/vistas.js'
 
 class Server {
     constructor(port, persistencia) {
@@ -31,19 +32,19 @@ class Server {
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.set('view engine', 'html');
 
-        // Ruta para renderizar la vista
+        // Ruta para renderizar las vistas
         this.app.get('/', (req, res) => {
             res.sendFile(path.join(__dirname, 'views', 'index.html'));
         });
-
+    
         this.app.get('/login', (req, res) => {
             res.sendFile(path.join(__dirname, 'views', 'login.html'));
         });
-
+    
         this.app.get('/registrarme', (req, res) => {
             res.sendFile(path.join(__dirname, 'views', 'registrarme.html'));
         });
-
+    
         this.app.get('/terminosycondiciones', (req, res) => {
             res.sendFile(path.join(__dirname, 'views', 'terminosycondiciones.html'));
         });
