@@ -4,8 +4,7 @@ class ModelMongoDB {
     constructor() {}
     obtenerRefugioPorEmail = async (email) => {
         if(!conexionMongoDB.conexionOk) return {}
-        const refugio = await conexionMongoDB.db.collection('refugios').findOne({email});
-        console.log(refugio)
+        const refugio = await conexionMongoDB.db.collection('refugios').findOne({email: email});
         return refugio;
     }
     obtenerRefugios = async () => {
@@ -32,4 +31,3 @@ class ModelMongoDB {
 }
 
 export default ModelMongoDB;
-

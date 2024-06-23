@@ -6,10 +6,9 @@ class Servicio {
         this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
     }
 
-    obtenerRefugio = async (email) => {
-       if(email) {
-        
-        const refugioEncontrado = await this.modelo.obtenerRefugioPorEmail(email);
+    obtenerRefugio = async (id) => {
+       if(id) {
+        const refugioEncontrado = await this.modelo.obtenerRefugio(id);
         return refugioEncontrado;
         }
         else {

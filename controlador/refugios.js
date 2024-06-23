@@ -15,13 +15,12 @@ class Controlador {
     
           // Verificar y decodificar el token para obtener el email del refugio
           const decoded = jwt.verify(token, config.JWT_SECRET);
-          const emailRefugio = decoded.id;
-    
+          const id = decoded.id;
           // Si hay un ID en los parámetros, obtener un solo refugio por ID
-          console.log("Email decodificado:", emailRefugio);
-          if (emailRefugio) {
+          console.log("id decodificado:", id);
+          if (id) {
             console.log("pasa por aca");
-            const refugio = await this.servicio.obtenerRefugio(emailRefugio);
+            const refugio = await this.servicio.obtenerRefugio(id);
             if (!refugio) {
               throw new Error('Refugio no encontrado');
             }
