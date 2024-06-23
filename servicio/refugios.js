@@ -1,9 +1,6 @@
 import RefugiosFactory from '../model/DAO/refugiosFactory.js';
 import AnimalesFactory from '../model/DAO/animalesFactory.js';
-import { encriptarContrasenia } from '../utils/encriptarContrasenia.js';
 import NotificacionesWhatsapp from '../utils/NotificacionesWhatsapp.js';
-import validar from './validaciones/refugios.js';
-import { ErrorRefugioInvalido } from '../utils/errorPersonalizado.js';
 
 class Servicio {
     constructor() {
@@ -23,16 +20,6 @@ class Servicio {
             return refugios;
         }
     }
-    
-    guardarRefugio = async (refugio) => {
-        const esRefugioValido = validar(refugio);
-        if(!esRefugioValido.result) throw new ErrorRefugioInvalido(esRefugioValido.error)
-        const {contrasenia} = refugio;
-        refugio.contrasenia = await encriptarContrasenia(contrasenia);
-        const refugioGuardado = await this.modeloRefugio.guardarRefugio(refugio);
-        return refugioGuardado;
-    }
-    
     actualizarRefugio = async (id, refugio) => {
         const refugioActualizado = await this.modeloRefugio.actualizarRefugio(id, refugio);
         return refugioActualizado;

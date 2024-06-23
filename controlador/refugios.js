@@ -9,16 +9,6 @@ class Controlador {
         const refugios = await this.servicio.obtenerRefugios(id);
         res.json(refugios);
     }
-    
-    guardarRefugio = async (req, res, next) => {
-      try {
-        const refugio = req.body;
-        const refugioGuardado = await this.servicio.guardarRefugio(refugio);
-        res.json(refugioGuardado);
-      } catch (error) {
-        next(error)
-      }
-    }
     actualizarRefugio = async (req, res) => {
         const {id} = req.params;
         const refugio = req.body;

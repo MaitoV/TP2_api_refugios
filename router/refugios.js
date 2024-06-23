@@ -11,7 +11,6 @@ class Router {
     start() {
         this.router.get('/informe', this.autenticacion, this.controlador.obtenerInforme);
         this.router.get('/:id?', this.controlador.obtenerRefugios);
-        this.router.post('/', this.controlador.guardarRefugio);
         this.router.put('/:id', this.controlador.actualizarRefugio); 
         return this.router;
     }

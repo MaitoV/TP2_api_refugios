@@ -11,7 +11,7 @@ export class ErrorAutenticacion extends ErrorPersonalizado {
     }
 }
 export class ErrorAutenticacionCamposVacios extends ErrorPersonalizado {
-    constructor(mensaje = 'El campo email y el campo contraseña no pueden estar vacíos') {
+    constructor(mensaje = 'Debe proporcionar un email y una contraseña para ingresar') {
       super(mensaje, 400);
     }
 }

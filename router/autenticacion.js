@@ -8,6 +8,7 @@ class Router {
     }
     start() {
         this.router.post('/ingresar', this.controlador.ingresar);
+        this.router.post('/registrarse', this.controlador.registrarse);
         return this.router;
     }
 }

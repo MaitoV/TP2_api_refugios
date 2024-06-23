@@ -7,8 +7,8 @@ class Controlador {
     }
     ingresar = async (req, res, next) => {
         try {
-            const {email, contrasenia} = req.body;
-            if(email === '' || contrasenia === '') {
+            const usuarioRefugio = req.body;
+            if(!usuarioRefugio) {
                 throw new ErrorAutenticacionCamposVacios();
             }
 
@@ -18,6 +18,15 @@ class Controlador {
             next(error);
         }
     }
+    registrarse = async (req, res, next) => {
+        try {
+          const refugio = req.body;
+          const refugioGuardado = await this.servicio.guardarRefugio(refugio);
+          res.json(refugioGuardado);
+        } catch (error) {
+          next(error)
+        }
+      }
 
 }
 

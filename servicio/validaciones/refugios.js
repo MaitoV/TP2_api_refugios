@@ -11,6 +11,7 @@ const refugioSchema = Joi.object({
         'any.required': 'El email es requerido.'
     }),
     contrasenia: Joi.string().min(8).required().messages({
+        'string.empty': 'La contraseña es requerida, no puede estar vacía.',
         'string.min': 'La contraseña debe tener al menos 8 caracteres.',
         'any.required': 'La contraseña es requerida, no puede estar vacia'
     }),
