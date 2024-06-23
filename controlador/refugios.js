@@ -10,10 +10,14 @@ class Controlador {
         res.json(refugios);
     }
     
-    guardarRefugio = async (req, res) => {
+    guardarRefugio = async (req, res, next) => {
+      try {
         const refugio = req.body;
         const refugioGuardado = await this.servicio.guardarRefugio(refugio);
         res.json(refugioGuardado);
+      } catch (error) {
+        next(error)
+      }
     }
     actualizarRefugio = async (req, res) => {
         const {id} = req.params;

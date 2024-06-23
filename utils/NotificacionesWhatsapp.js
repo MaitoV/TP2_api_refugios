@@ -3,7 +3,7 @@ const { Client, LocalAuth } = whatsappWeb
 import qrcode from 'qrcode-terminal';
 
 class NotificacionesWhatsapp {
-    static #cliente;
+   /* static #cliente;
     static #instancia;
     constructor() {
         if (!NotificacionesWhatsapp.#instancia) {
@@ -57,7 +57,7 @@ class NotificacionesWhatsapp {
     enviarMensaje = async (mensaje, numero) => {
         let numeroFormateado = `${numero}@c.us`
         await NotificacionesWhatsapp.#cliente.sendMessage(numeroFormateado, mensaje);
-    }
+    }*/
 
 }
 
