@@ -7,7 +7,7 @@ class Router {
         this.controlador = new Controlador();
     }
     start() {
-        this.router.get('/', this.controlador.obtenerRefugio);
+        this.router.get('/:id?', this.controlador.obtenerRefugio);
         this.router.post('/', this.controlador.guardarRefugio);
         this.router.put('/:id', this.controlador.actualizarRefugio); 
         return this.router;

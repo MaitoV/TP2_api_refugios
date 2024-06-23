@@ -19,8 +19,7 @@ class Controlador {
           // Si hay un ID en los parámetros, obtener un solo refugio por ID
           console.log("id decodificado:", id);
           if (id) {
-            console.log("pasa por aca");
-            const refugio = await this.servicio.obtenerRefugio(id);
+            const refugio = await this.Servicio.obtenerRefugio(id);
             if (!refugio) {
               throw new Error('Refugio no encontrado');
             }
