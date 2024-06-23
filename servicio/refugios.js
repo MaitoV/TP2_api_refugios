@@ -1,11 +1,14 @@
 import RefugiosFactory from '../model/DAO/refugiosFactory.js';
 import AnimalesFactory from '../model/DAO/animalesFactory.js';
 import { encriptarContrasenia } from '../utils/encriptarContrasenia.js';
+import NotificacionesWhatsapp from '../utils/NotificacionesWhatsapp.js';
 
 class Servicio {
     constructor() {
         this.modeloRefugio = RefugiosFactory.get(process.env.MODO_PERSISTENCIA);
         this.modeloAnimales = AnimalesFactory.get(process.env.MODO_PERSISTENCIA);
+        this.notificar = new NotificacionesWhatsapp();
+        
     }
 
     obtenerRefugios = async (id) => {
@@ -34,6 +37,7 @@ class Servicio {
         const animales = await this.modeloAnimales.obtenerAnimalesPorRefugio(refugioID);
         const estadisticas = this.#procesarEstadisticas(animales);
         const mensaje = this.#formatearMensajeEstadisticas(estadisticas);
+        await this.notificar.enviarMensaje();
         return mensaje;
         
     }

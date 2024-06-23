@@ -1,12 +1,14 @@
 import express from 'express';
 import indexRouter from './router/index.js';
 import conexionMongoDB from './model/dbMongo.js';
+import NotificacionesWhatsapp from './utils/NotificacionesWhatsapp.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 class Server {
-    constructor(port, persistencia) {
+    constructor(port, persistencia, notificacion) {
         this.port = port;
         this.persistencia = persistencia;
+        this.notificacion = notificacion;
 
         this.app = express()
         this.server = null;
@@ -22,6 +24,9 @@ class Server {
         if(this.persistencia === 'MONGODB') {
             await conexionMongoDB.conectar();
         }
+        /*if(this.notificacion === 'WHATSAPP') {
+            new NotificacionesWhatsapp();
+        }*/
 
         const PORT = this.port;
         this.server = this.app.listen(PORT, () => console.log(`Servidor ApiRestFul escuchando en el puerto ${PORT}`));

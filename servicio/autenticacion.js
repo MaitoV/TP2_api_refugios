@@ -8,6 +8,7 @@ class Autenticacion  {
         this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
     }
     async login (email, contrasenia) {
+        //TODO: VALIDAR QUE SI EL MAIL NO ESTA TIRE UN ERROR DE REGISTRO
         const refugio = await this.modelo.obtenerRefugioPorEmail(email);
         if(!refugio) throw new ErrorAutenticacion();
         const esContraseniaCorrecta = await bcrypt.compare(contrasenia, refugio.contrasenia);
