@@ -4,7 +4,8 @@ import conexionMongoDB from './model/dbMongo.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import autenticacion from './middlewares/autenticacion.js'
+import autenticacionMiddleware from './middlewares/autenticacion.js';
+
 
 class Server {
     constructor(port, persistencia) {
@@ -38,11 +39,11 @@ class Server {
         });
 
 
-        this.app.get('/dashboard', (req, res) => {            
-                res.sendFile(path.join(__dirname, 'views', 'dashboard.html'));
+        this.app.get('/dashboard', autenticacionMiddleware, (req, res) => {
+            res.sendFile(path.join(__dirname, 'views', 'dashboard.html'));
         });
     
-        this.app.get('/login', (req, res) => {
+        this.app.get('/ingresar', (req, res) => {
             res.sendFile(path.join(__dirname, 'views', 'login.html'));
         });
     

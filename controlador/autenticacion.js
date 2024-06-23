@@ -5,31 +5,30 @@ class Controlador {
     constructor() {
         this.servicio = new Servicio();
     }
-    ingresar = async (req, res, next) => {
+   ingresar = async (req, res, next) => {
         try {
-            console.log(req.body)
-            const {email, contrasenia} = req.body;
-            if(email === '' || contrasenia === '') {
+            const { email, contrasenia } = req.body;
+            if (!email || !contrasenia) {
                 throw new ErrorAutenticacionCamposVacios();
             }
             
-            const token = await this.servicio.login(email, contrasenia);
-            res.json({ token });
-        } catch(error) {
+            const { token } = await this.servicio.ingresar(email, contrasenia);
+            res.json({ token});
+        } catch (error) {
             next(error);
         }
     }
 
     registrarme = async (req, res, next) => {
         try {
-            const {email, contrasenia} = req.body;
-            if(email === '' || contrasenia === '') {
+            const { email, contrasenia } = req.body;
+            if (!email || !contrasenia) {
                 throw new ErrorAutenticacionCamposVacios();
             }
             
-            const token = await this.servicio.registrarme(email, contrasenia);
+            const { token } = await this.servicio.registrarme(email, contrasenia);
             res.json({ token });
-        } catch(error) {
+        } catch (error) {
             next(error);
         }
     }

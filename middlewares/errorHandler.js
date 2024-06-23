@@ -1,9 +1,12 @@
 import { ErrorPersonalizado } from "../utils/errorPersonalizado.js";
 
-export const errorHandler = (error, req, res, next) => {
-    const codigoEstado = error.codigoEstado || 404;
-    const mensaje = error.message || 'contenido no encontrado';
+export const errorHandler = (err, req, res, next) => {
+    if (err.name === 'ErrorSinToken' || err.name === 'ErrorTokenInvalido') {
+        return res.status(401).json({ message: 'Autenticación fallida' });
+    }
 
-    //TODO: if(error instanceof ErrorPersonalizado) return res.status(codigoEstado).json({error: mensaje})
-    return res.status(codigoEstado).json({error: mensaje})
-}
+    res.status(err.status || 500).json({
+        message: err.message || 'Error Interno del Servidor',
+        error: err
+    });
+};

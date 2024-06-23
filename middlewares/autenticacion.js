@@ -1,3 +1,4 @@
+// En middlewares/autenticacion.js
 import { ErrorSinToken, ErrorTokenInvalido } from "../utils/errorPersonalizado.js";
 import jwt from "jsonwebtoken";
 import config from './../config.js';
