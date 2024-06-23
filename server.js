@@ -38,8 +38,7 @@ class Server {
         });
 
 
-        this.app.get('/dashboard',autenticacion, (req, res) => {
-            if(!autenticacion.autenticacionMiddleware(req))
+        this.app.get('/dashboard', (req, res) => {            
                 res.sendFile(path.join(__dirname, 'views', 'dashboard.html'));
         });
     
