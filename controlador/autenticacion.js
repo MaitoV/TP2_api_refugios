@@ -19,6 +19,20 @@ class Controlador {
         }
     }
 
+    registrarme = async (req, res, next) => {
+        try {
+            const {email, contrasenia} = req.body;
+            if(email === '' || contrasenia === '') {
+                throw new ErrorAutenticacionCamposVacios();
+            }
+            
+            const token = await this.servicio.registrarme(email, contrasenia);
+            res.json({ token });
+        } catch(error) {
+            next(error);
+        }
+    }
+
 }
 
 export default Controlador;

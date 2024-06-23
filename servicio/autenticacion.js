@@ -17,6 +17,22 @@ class Autenticacion  {
 
         return generarToken(refugio._id);
     }
+
+    async registrarme (email, contrasenia) {
+        
+        const refugio = await this.modelo.obtenerRefugioPorEmail(email);
+        if(!refugio){
+
+            const nuevoRefugio = {
+                email: email,
+                contrasenia: contrasenia
+            };
+
+            this.modelo.guardarRefugio(nuevoRefugio)
+        }
+        
+        return generarToken(refugio._id);
+    }
 }
 
 export default Autenticacion;
