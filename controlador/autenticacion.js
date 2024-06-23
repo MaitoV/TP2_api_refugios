@@ -11,7 +11,7 @@ class Controlador {
             if(email === '' || contrasenia === '') {
                 throw new ErrorAutenticacionCamposVacios();
             }
-
+            
             const token = await this.servicio.login(email, contrasenia);
             res.json({ token });
         } catch(error) {

@@ -40,6 +40,14 @@ class Server {
             res.sendFile(path.join(__dirname, 'views', 'login.html'));
         });
 
+        this.app.get('/registrarme', (req, res) => {
+            res.sendFile(path.join(__dirname, 'views', 'registrarme.html'));
+        });
+
+        this.app.get('/terminosycondiciones', (req, res) => {
+            res.sendFile(path.join(__dirname, 'views', 'terminosycondiciones.html'));
+        });
+
         this.app.use('/api', new indexRouter().start());
         this.app.use(errorHandler);
 

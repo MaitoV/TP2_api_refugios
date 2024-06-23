@@ -8,6 +8,7 @@ class Autenticacion  {
         this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
     }
     async login (email, contrasenia) {
+        
         const refugio = await this.modelo.obtenerRefugioPorEmail(email);
         if(!refugio) throw new ErrorAutenticacion();
         const esContraseniaCorrecta = await bcrypt.compare(contrasenia, refugio.contrasenia);
