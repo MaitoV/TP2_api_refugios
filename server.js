@@ -4,7 +4,7 @@ import conexionMongoDB from './model/dbMongo.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import Vistas from './router/vistas.js'
+import autenticacion from './middlewares/autenticacion.js'
 
 class Server {
     constructor(port, persistencia) {
@@ -35,6 +35,12 @@ class Server {
         // Ruta para renderizar las vistas
         this.app.get('/', (req, res) => {
             res.sendFile(path.join(__dirname, 'views', 'index.html'));
+        });
+
+
+        this.app.get('/dashboard',autenticacion, (req, res) => {
+            if(!autenticacion.autenticacionMiddleware(req))
+                res.sendFile(path.join(__dirname, 'views', 'dashboard.html'));
         });
     
         this.app.get('/login', (req, res) => {

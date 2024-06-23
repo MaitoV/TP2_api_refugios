@@ -3,9 +3,11 @@ import { ErrorAutenticacion } from '../utils/errorPersonalizado.js';
 import bcrypt from 'bcryptjs';
 import generarToken from './../utils/generarToken.js';
 
+
 class Autenticacion  {
     constructor() {
         this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
+        
     }
     async login (email, contrasenia) {
         
@@ -15,7 +17,10 @@ class Autenticacion  {
 
         if(!esContraseniaCorrecta) throw new ErrorAutenticacion();
 
-        return generarToken(refugio._id);
+        const token = generarToken(refugio._id);
+        
+        return { token, refugio };
+
     }
 
     async registrarme (email, contrasenia) {
@@ -23,15 +28,16 @@ class Autenticacion  {
         const refugio = await this.modelo.obtenerRefugioPorEmail(email);
         if(!refugio){
 
-            const nuevoRefugio = {
+            refugio = {
                 email: email,
                 contrasenia: contrasenia
             };
 
-            this.modelo.guardarRefugio(nuevoRefugio)
+            this.modelo.guardarRefugio(refugio)
+            
         }
-        
-        return generarToken(refugio._id);
+        const token = generarToken(email);
+        return { token, refugio };
     }
 }
 
