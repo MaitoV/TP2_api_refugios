@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import indexRouter from './router/index.js';
 import conexionMongoDB from './model/dbMongo.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -21,6 +22,7 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.static('/public'))
         this.app.use(express.urlencoded({extended: true}))
+        this.app.use(cookieParser()); // Middleware para parsear cookies
 
 
         const __filename = fileURLToPath(import.meta.url);

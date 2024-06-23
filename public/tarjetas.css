@@ -19,3 +19,17 @@
     gap: 100px;
     margin-top: 50px;
 }
+
+#refugioForm{
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    text-align: center;
+    align-items: center;
+    margin: 50px auto auto auto;
+
+}
+
+#guardarDatosRefugio{
+    margin-top: 20px;
+}

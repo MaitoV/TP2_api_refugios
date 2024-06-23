@@ -19,7 +19,7 @@ class Autenticacion  {
 
         const token = generarToken(refugio._id);
         
-        return { token, refugio };
+        return {token};
 
     }
 
@@ -37,7 +37,7 @@ class Autenticacion  {
             
         }
         const token = generarToken(email);
-        return { token, refugio };
+        return { token};
     }
 }
 

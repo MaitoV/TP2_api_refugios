@@ -5,21 +5,16 @@ import config from './../config.js';
 
 const autenticacionMiddleware = (req, res, next) => {
     try {
-        const cabeceraAutenticacion = req.headers.authorization;
+        const token = req.cookies.token; // Leer el token de la cookie
 
-        if (!cabeceraAutenticacion) throw new ErrorSinToken();
-    
-        const token = cabeceraAutenticacion.split(' ')[1];
-    
-        if(!token) throw new ErrorTokenInvalido();
-    
+        if (!token) throw new ErrorSinToken();
+
         const tokenDecodificado = jwt.verify(token, config.JWT_SECRET);
         req.user = tokenDecodificado;
-    
+
         next();
     } catch (error) {
         next(error);
     }
 }
-
 export default autenticacionMiddleware;

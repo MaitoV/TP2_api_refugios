@@ -34,7 +34,7 @@
             <a class="nav__link" href="#">Fundación</a>
           </li>
           <li class="nav__item">
-            <a class="btn" href="/login">Ingresar</a>
+            <a class="btn" href="/ingresar">Ingresar</a>
           </li>
         </ul>
       </nav>
@@ -46,13 +46,13 @@
          <div class="title">
             Ingresar al refugio
          </div>
-         <form action="/api/autenticacion/ingresar" method="post">
+         <form id="loginForm">
             <div class="field">
-               <input type="text" required name="email">
+               <input id="email" type="text" required name="email">
                <label>Email</label>
             </div>
             <div class="field">
-               <input type="password" required name="contrasenia">
+               <input id="contrasenia" type="password" required name="contrasenia">
                <label>Contraseña</label>
             </div>
             <div class="content">
@@ -73,7 +73,36 @@
          </form>
       </div>
 
-  
+      <script>
+         document.getElementById('loginForm').addEventListener('submit', async (event) => {
+             event.preventDefault(); // Evita el comportamiento por defecto de envío del formulario
+             
+             const email = document.getElementById('email').value;
+             const contrasenia = document.getElementById('contrasenia').value;
+ 
+             try {
+                 const response = await fetch('/api/autenticacion/ingresar', {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json'
+                     },
+                     body: JSON.stringify({ email, contrasenia }),
+                     credentials: 'include' // Esto asegura que las cookies se envíen
+                 });
+ 
+                 const result = await response.json();
+ 
+                 if (response.ok) {
+                     // Redireccionar a la URL especificada
+                     window.location.href = result.redirectTo;
+                 } else {
+                     console.error('Error de autenticación:', result.message);
+                 }
+             } catch (error) {
+                 console.error('Error de red:', error);
+             }
+         });
+     </script>
 
 </body>
 

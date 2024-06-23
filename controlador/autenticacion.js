@@ -13,7 +13,9 @@ class Controlador {
             }
             
             const { token } = await this.servicio.ingresar(email, contrasenia);
-            res.json({ token});
+            res.cookie('token', token, { httpOnly: true, secure: false}); 
+            res.json({ redirectTo: '/dashboard' });
+            
         } catch (error) {
             next(error);
         }
