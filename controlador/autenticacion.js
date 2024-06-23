@@ -12,8 +12,8 @@ class Controlador {
                 throw new ErrorAutenticacionCamposVacios();
             }
             
-            const { token } = await this.servicio.ingresar(email, contrasenia);
-            res.cookie('token', token, { httpOnly: true, secure: false}); 
+            const { token } = await this.servicio.ingresar(email,contrasenia);
+            res.status(200).json({ token });
             res.json({ redirectTo: '/dashboard' });
             
         } catch (error) {

@@ -12,12 +12,13 @@ class Autenticacion  {
     async ingresar (email, contrasenia) {
         
         const refugio = await this.modelo.obtenerRefugioPorEmail(email);
+        console.log(refugio)
         if(!refugio) throw new ErrorAutenticacion();
         const esContraseniaCorrecta = await bcrypt.compare(contrasenia, refugio.contrasenia);
 
         if(!esContraseniaCorrecta) throw new ErrorAutenticacion();
 
-        const token = generarToken(refugio._id);
+        const token = generarToken(refugio.email);
         
         return {token};
 

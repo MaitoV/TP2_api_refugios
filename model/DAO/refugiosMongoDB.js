@@ -4,7 +4,8 @@ class ModelMongoDB {
     constructor() {}
     obtenerRefugioPorEmail = async (email) => {
         if(!conexionMongoDB.conexionOk) return {}
-        const refugio = await conexionMongoDB.db.collection('refugios').findOne({email: email});
+        const refugio = await conexionMongoDB.db.collection('refugios').findOne({email});
+        console.log(refugio)
         return refugio;
     }
     obtenerRefugios = async () => {
