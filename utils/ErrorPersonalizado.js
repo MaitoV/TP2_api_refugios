@@ -17,16 +17,11 @@ export class ErrorCamposAutenticacionVacios extends ErrorPersonalizado {
 }
 export class ErrorSinToken extends ErrorPersonalizado {
   constructor(mensaje = 'No tiene permisos para realizar esta acción. Proporcione su token') {
-    super(mensaje, 401);
+    super(mensaje, 400);
   }
 }
 export class ErrorTokenInvalido extends ErrorPersonalizado {
   constructor(mensaje = 'No tiene permisos para realizar esta acción. Provea un token válido') {
-    super(mensaje, 401);
-  }
-}
-export class ErrorAnimalInvalido extends ErrorPersonalizado {
-  constructor(mensaje = 'Los campos: nombre, tipo, estado y edad son obligatorios') {
     super(mensaje, 401);
   }
 }
@@ -46,6 +41,11 @@ export class ErrorArchivoIncorrecto extends ErrorPersonalizado {
   }
 }
 export class ErrorRefugioInvalido extends ErrorPersonalizado {
+  constructor(mensaje) {
+    super(mensaje, 400)
+  }
+}
+export class ErrorDeValidacion extends ErrorPersonalizado {
   constructor(mensaje) {
     super(mensaje, 400)
   }

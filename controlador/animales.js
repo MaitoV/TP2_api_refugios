@@ -1,5 +1,6 @@
 import Servicio from '../servicio/animales.js';
-import { ErrorAnimalInvalido, ErrorArchivoFaltante } from '../utils/errorPersonalizado.js';
+import { ErrorArchivoFaltante, ErrorBodyVacio} from '../utils/errorPersonalizado.js';
+import esObjetoVacio from './../utils/esObjetoVacio.js'
 
 class Controlador {
     constructor() {
@@ -18,9 +19,8 @@ class Controlador {
         try {
             const refugioID = req.user.id;
             const animal = req.body;
-            if(animal === '') throw new ErrorAnimalInvalido();
-            req.body.refugioID = refugioID;
-            const animalGuardado = await this.servicio.guardarAnimal(req.body);
+            if(esObjetoVacio(animal)) throw new ErrorBodyVacio();
+            const animalGuardado = await this.servicio.guardarAnimal(animal, refugioID);
             res.json(animalGuardado);
 
         } catch (error) {
@@ -45,6 +45,7 @@ class Controlador {
             const {id} = req.params;
             const animal = req.body;
             const refugioID = req.user.id;
+            if(esObjetoVacio(animal)) throw new ErrorBodyVacio();
             const animalActualizado = await this.servicio.actualizarAnimal(id, animal, refugioID);
             res.json(animalActualizado);
         } catch(error) {

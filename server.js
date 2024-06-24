@@ -1,7 +1,6 @@
 import express from 'express';
 import indexRouter from './router/index.js';
 import conexionMongoDB from './model/dbMongo.js';
-import NotificacionesWhatsapp from './utils/NotificacionesWhatsapp.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 class Server {

@@ -9,12 +9,12 @@ class ModelMongoDB {
     }
     obtenerRefugios = async () => {
         if(!conexionMongoDB.conexionOk) return []
-        const refugios = await conexionMongoDB.db.collection('refugios').find({}).toArray();
+        const refugios = await conexionMongoDB.db.collection('refugios').find({}, { projection: { contrasenia: 0 }}).toArray();
         return refugios;
     }
     obtenerRefugio = async (id) => {
         if(!conexionMongoDB.conexionOk) return {}
-        const refugio = await conexionMongoDB.db.collection('refugios').findOne({_id: new ObjectId(id)});
+        const refugio = await conexionMongoDB.db.collection('refugios').findOne({_id: new ObjectId(id)}, { projection: { contrasenia: 0 } });
         return refugio || {};
     }
     guardarRefugio = async (refugio) => {
