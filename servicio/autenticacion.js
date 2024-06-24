@@ -1,5 +1,5 @@
 import ModelFactory from '../model/DAO/refugiosFactory.js';
-import { ErrorAutenticacion, ErrorRefugioInvalido } from '../utils/errorPersonalizado.js';
+import { ErrorAutenticacion, ErrorRefugioInvalido, ErrorEmailEnUso } from '../utils/errorPersonalizado.js';
 import { encriptarContrasenia } from '../utils/encriptarContrasenia.js';
 import validar from './validaciones/refugios.js';
 import bcrypt from 'bcryptjs';
@@ -21,10 +21,18 @@ class Autenticacion  {
     guardarRefugio = async (refugio) => {
         const esRefugioValido = validar(refugio);
         if(esRefugioValido.error) throw new ErrorRefugioInvalido(esRefugioValido.error)
+        const emailEnUso = this.#emailEnUso(refugio.email)
+        if(emailEnUso) throw new ErrorEmailEnUso()
         const {contrasenia} = refugio;
         refugio.contrasenia = await encriptarContrasenia(contrasenia);
         const refugioGuardado = await this.modelo.guardarRefugio(refugio);
         return refugioGuardado;
+    }
+    #emailEnUso = async (email) => {
+        let emailEnUso = false;
+        const refugio = await this.modelo.obtenerRefugioPorEmail(email);
+        if(refugio) emailEnUso = true;
+        return emailEnUso;
     }
     
 }

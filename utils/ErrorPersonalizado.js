@@ -50,3 +50,8 @@ export class ErrorRefugioInvalido extends ErrorPersonalizado {
     super(mensaje, 400)
   }
 }
+export class ErrorEmailEnUso extends ErrorPersonalizado {
+  constructor(mensaje= "Conflicto - el email ya está registrado") {
+    super(mensaje, 409)
+  }
+}
