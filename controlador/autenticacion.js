@@ -1,5 +1,6 @@
 import Servicio from '../servicio/autenticacion.js';
-import { ErrorAutenticacionCamposVacios } from '../utils/errorPersonalizado.js';
+import {ErrorBodyVacio} from '../utils/errorPersonalizado.js';
+import esObjetoVacio from './../utils/esObjetoVacio.js';
 
 class Controlador {
     constructor() {
@@ -8,11 +9,8 @@ class Controlador {
     ingresar = async (req, res, next) => {
         try {
             const usuarioRefugio = req.body;
-            if(!usuarioRefugio) {
-                throw new ErrorAutenticacionCamposVacios();
-            }
-
-            const token = await this.servicio.login(email, contrasenia);
+            if(esObjetoVacio(usuarioRefugio)) throw new ErrorBodyVacio();
+            const token = await this.servicio.login(usuarioRefugio);
             res.json({ token });
         } catch(error) {
             next(error);
@@ -21,6 +19,7 @@ class Controlador {
     registrarse = async (req, res, next) => {
         try {
           const refugio = req.body;
+          if(esObjetoVacio(refugio)) throw new ErrorBodyVacio();
           const refugioGuardado = await this.servicio.guardarRefugio(refugio);
           res.json(refugioGuardado);
         } catch (error) {

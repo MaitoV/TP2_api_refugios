@@ -6,14 +6,14 @@ export class ErrorPersonalizado extends Error {
 }
 
 export class ErrorAutenticacion extends ErrorPersonalizado {
-    constructor(mensaje = 'El email o la contraseña no coinciden no coinciden con los registrados') {
+    constructor(mensaje = 'El email o la contraseña no coinciden con los registrados') {
       super(mensaje, 400);
     }
 }
-export class ErrorAutenticacionCamposVacios extends ErrorPersonalizado {
-    constructor(mensaje = 'Debe proporcionar un email y una contraseña para ingresar') {
-      super(mensaje, 400);
-    }
+export class ErrorCamposAutenticacionVacios extends ErrorPersonalizado {
+  constructor(mensaje = 'El email y la contraseña son campos obligatorios para autenticarse') {
+    super(mensaje, 400);
+  }
 }
 export class ErrorSinToken extends ErrorPersonalizado {
   constructor(mensaje = 'No tiene permisos para realizar esta acción. Proporcione su token') {
@@ -53,5 +53,10 @@ export class ErrorRefugioInvalido extends ErrorPersonalizado {
 export class ErrorEmailEnUso extends ErrorPersonalizado {
   constructor(mensaje= "Conflicto - el email ya está registrado") {
     super(mensaje, 409)
+  }
+}
+export class ErrorBodyVacio extends ErrorPersonalizado {
+  constructor(mensaje= "El cuerpo de la solicitud no puede estar vacío. Faltan campos obligatorios.") {
+    super(mensaje, 400)
   }
 }

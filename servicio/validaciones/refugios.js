@@ -3,6 +3,7 @@ import Joi from 'joi'
 const refugioSchema = Joi.object({
     nombre: Joi.string().min(5).required().messages({
         'string.min': 'El nombre debe tener al menos 5 caracteres.',
+        'string.empty': 'El nombre es requerido, no puede estar vacío.',
         'any.required': 'El nombre es requerido, no puede estar vacío.'
     }),
     email: Joi.string().email().required().messages({
@@ -17,6 +18,7 @@ const refugioSchema = Joi.object({
     }),
     telefono: Joi.string().pattern(/^\+5490?\d{9,10}$/).required().messages({
         'string.pattern.base': 'El teléfono debe tener un formato válido de número de Argentina (+549XXXXXXXXXX).',
+        'string.empty': 'El teléfono es requerido, no puede estar vacío',
         'any.required': 'El teléfono es requerido, no puede estar vacío'
     })
 });
