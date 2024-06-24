@@ -6,8 +6,8 @@ export class ErrorPersonalizado extends Error {
 }
 
 export class ErrorAutenticacion extends ErrorPersonalizado {
-    constructor(mensaje = 'El email o la contraseña no coinciden') {
-      super(mensaje, 401);
+    constructor(mensaje = 'El email o la contraseña no coinciden no coinciden con los registrados') {
+      super(mensaje, 400);
     }
 }
 export class ErrorAutenticacionCamposVacios extends ErrorPersonalizado {

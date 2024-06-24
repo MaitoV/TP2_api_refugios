@@ -10,7 +10,6 @@ class Autenticacion  {
         this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
     }
     login = async (email, contrasenia) => {
-        //TODO: VALIDAR QUE SI EL MAIL NO ESTA TIRE UN ERROR DE REGISTRO
         const refugio = await this.modelo.obtenerRefugioPorEmail(email);
         if(!refugio) throw new ErrorAutenticacion();
         const esContraseniaCorrecta = await bcrypt.compare(contrasenia, refugio.contrasenia);
@@ -21,7 +20,7 @@ class Autenticacion  {
     }
     guardarRefugio = async (refugio) => {
         const esRefugioValido = validar(refugio);
-        if(!esRefugioValido.result) throw new ErrorRefugioInvalido(esRefugioValido.error)
+        if(esRefugioValido.error) throw new ErrorRefugioInvalido(esRefugioValido.error)
         const {contrasenia} = refugio;
         refugio.contrasenia = await encriptarContrasenia(contrasenia);
         const refugioGuardado = await this.modelo.guardarRefugio(refugio);

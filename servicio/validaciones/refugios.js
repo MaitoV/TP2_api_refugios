@@ -15,7 +15,7 @@ const refugioSchema = Joi.object({
         'string.min': 'La contraseña debe tener al menos 8 caracteres.',
         'any.required': 'La contraseña es requerida, no puede estar vacia'
     }),
-    telefono: Joi.string().pattern(/^\+549\d{10}$/).required().messages({
+    telefono: Joi.string().pattern(/^\+5490?\d{9,10}$/).required().messages({
         'string.pattern.base': 'El teléfono debe tener un formato válido de número de Argentina (+549XXXXXXXXXX).',
         'any.required': 'El teléfono es requerido, no puede estar vacío'
     })
