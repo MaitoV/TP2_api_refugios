@@ -19,8 +19,16 @@ class ModelMongoDB {
         const animal = await conexionMongoDB.db.collection('animales').findOne({_id: new ObjectId(id)});
         return animal || {};
     }
+
+    obtenerAnimalesPorRefugio = async (refugioID) => {
+        if(!conexionMongoDB.conexionOk) return {}
+        const animales = await conexionMongoDB.db.collection('animales').find({refugioID: new ObjectId(refugioID)}).toArray();
+        console.log(animales)
+        return animales;
+    }
+
     obtenerAdoptables = async () => {
-        const disponibles = await conexionMongoDB.db.collection('animales').find({ estado: 'disponible' }).toArray();
+        const disponibles = await conexionMongoDB.db.collection('animales').find({ estado: 'en_adopcion' }).toArray();
         return disponibles;
     }
     guardarAnimal = async (animal) => {

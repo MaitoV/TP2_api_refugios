@@ -1,8 +1,8 @@
 .tarjeta{
     width: 400px;
-    height: 500px;
+    height: 600px;
     background-color: white;
-    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     text-align: center;
 }
@@ -20,7 +20,7 @@
     margin-top: 50px;
 }
 
-#refugioForm{
+.formulario{
     display: flex;
     flex-direction: column;
     max-width: 200px;
@@ -32,4 +32,9 @@
 
 #guardarDatosRefugio{
     margin-top: 20px;
+}
+
+.grupo{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

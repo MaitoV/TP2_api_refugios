@@ -47,45 +47,82 @@
     <img src="/house.png" width="200px" alt="">
     <p>Datos del refugio</p>
 
-    <form id="refugioForm">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
-      <label for="direccion">Dirección:</label>
-      <input type="text" id="direccion" name="direccion" required>
-      <label for="provincia">Provincia:</label>
-      <input type="text" id="provincia" name="provincia" required>
-      <label for="localidad">Localidad:</label>
+    <form id="refugioForm" class="formulario">
+      <div class="grupo">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+      </div>
+      <div class="grupo">
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion" required>
+      </div>
+      <div class="grupo">
+        <label for="provincia">Provincia:</label>
+        <input type="text" id="provincia" name="provincia" required>
+      </div>
+      <div class="grupo">
+        <label for="localidad">Localidad:</label>
       <input type="text" id="localidad" name="localidad" required>
-      <label for="codigoPostal">Código Postal:</label>
-      <input type="text" id="codigoPostal" name="codigoPostal" required>
-      <label for="telefono">Teléfono:</label>
-      <input type="text" id="telefono" name="telefono" required>
+      </div>
+      <div class="grupo">
+        <label for="codigoPostal">Código Postal:</label>
+        <input type="text" id="codigoPostal" name="codigoPostal" required>
+      </div>
+      <div class="grupo">
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" required>
+      </div>
       <button id="guardarDatosRefugio" type="submit">Guardar</button>
     </form>
   </div>
   <div class="tarjeta">
     <img src="/boton-mas.png" width="200px" alt="">
     <p>Agregar mascota</p>
-    <form id="refugioForm">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
-      <label for="clase">Clase:</label>
-      <input type="text" id="clase" name="clase" required>
-      <label for="edad">Edad:</label>
-      <input type="text" id="edad" name="edad" required>
-      <label for="raza">Raza:</label>
-      <input type="text" id="raza" name="raza" required>
-      <button id="guardarNuevoAnimal" type="submit">Guardar</button>
+    <form id="mascotaForm" class="formulario">
+      <div class="grupo">
+        <label for="nombreMascota">Nombre:</label>
+        <input type="text" id="nombreMascota" name="nombreMascota" required>
+      </div>
+     
+      <div class="grupo"><label for="clase">Clase:</label>
+        <select id="clase" name="clase" required>
+          <option value="" disabled selected>Seleccionar clase</option>
+          <option value="gato">Gato</option>
+          <option value="perro">Perro</option>
+          <option value="conejo">Conejo</option>
+          <option value="cobayo">Cobayo</option>
+          <option value="ave">Ave</option>
+        </select></div>
+      <div class="grupo"><label for="edad">Edad:</label>
+        <input type="text" id="edad" name="edad" required></div>
+      <div class="grupo"><label for="raza">Raza:</label>
+        <input type="text" id="raza" name="raza" required></div>
+      <div class="grupo"><label for="estado">Estado:</label>
+        <select id="estado" name="estado" required>
+          <option value="" disabled selected>Seleccionar estado</option>
+          <option value="en_adopcion">En Adopción</option>
+          <option value="adoptado">Adoptado</option>
+          <option value="en_transito">En Tránsito</option>
+        </select></div>
+      <div class="grupo"></div>
+
+
+      <button id="guardarNuevoAnimal">Guardar</button>
     </form>
 
   </div>
-  <div class="tarjeta">
+  <div class="tarjeta" style="text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+" >
     <img src="/lista.png" width="200px" alt="">
-    <p>Ver todas las mascotas</p>
+    <button id="verMascotas">Ver todas las mascotas</button>
   </div>
     
   </section>
 
+  <div id="tablaMascotasContainer"></div>
 
 
   <script>
@@ -160,8 +197,130 @@
         // Manejar errores según sea necesario
       }
     });
+
   </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const botonGuardarAnimal = document.getElementById('guardarNuevoAnimal');
+
+    botonGuardarAnimal.addEventListener('click', async () => {
+      try {
+        const token = sessionStorage.getItem('token');
+        if (!token) {
+          throw new Error('Token de sesión no disponible');
+        }
+
+        const mascotaData = {
+          nombre: document.getElementById('nombreMascota').value,
+          clase: document.getElementById('clase').value,
+          edad: document.getElementById('edad').value,
+          raza: document.getElementById('raza').value,
+          estado: document.getElementById('estado').value
+        };
+
+        const response = await fetch('/api/animalitos/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(mascotaData)
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al guardar la nueva mascota');
+        }
+
+        const nuevaMascota = await response.json();
+        console.log('Nueva mascota guardada:', nuevaMascota);
+        alert('Nueva mascota guardada correctamente');
+        document.getElementById('mascotaForm').reset();
+      } catch (error) {
+        console.error('Error al guardar la nueva mascota:', error);
+        alert('Hubo un problema al guardar la nueva mascota');
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const botonVerMascotas = document.getElementById('verMascotas');
+    
+    botonVerMascotas.addEventListener('click', async () => {
+      try {
+        const token = sessionStorage.getItem('token');
+        if (!token) {
+          throw new Error('Token de sesión no disponible');
+        }
+
+        const response = await fetch('/api/animalitos/', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al obtener la lista de mascotas');
+        }
+
+        const mascotas = await response.json();
+        console.log(mascotas)
+        generarTablaMascotas(mascotas);
+      } catch (error) {
+        console.error('Error al obtener la lista de mascotas:', error);
+        alert('Hubo un problema al obtener la lista de mascotas');
+      }
+    });
+  });
+
+  function generarTablaMascotas(mascotas) {
+    const container = document.getElementById('tablaMascotasContainer');
+    container.innerHTML = ''; // Limpiar cualquier contenido previo
+    
+    if (mascotas.length === 0) {
+      container.innerHTML = '<p>No hay mascotas disponibles.</p>';
+      return;
+    }
+
+    const table = document.createElement('table');
+    table.style.width = '100%';
+    table.setAttribute('border', '1');
+    
+    // Crear encabezado de la tabla
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Nombre', 'Clase', 'Edad', 'Raza', 'Estado'];
+    headers.forEach(headerText => {
+      const th = document.createElement('th');
+      th.appendChild(document.createTextNode(headerText));
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Crear cuerpo de la tabla
+    const tbody = document.createElement('tbody');
+    mascotas.forEach(mascota => {
+      const row = document.createElement('tr');
+      Object.keys(mascota).forEach(key => {
+        if (headers.includes(key.charAt(0).toUpperCase() + key.slice(1))) {
+          const cell = document.createElement('td');
+          cell.appendChild(document.createTextNode(mascota[key]));
+          row.appendChild(cell);
+        }
+      });
+      tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+
+    container.appendChild(table);
+  }
+</script>
 
 
 </body>

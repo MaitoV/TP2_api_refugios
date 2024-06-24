@@ -13,6 +13,7 @@ class Router {
     start() {
         this.router.get('/adoptables', this.controlador.obtenerAdoptables);
         this.router.get('/:id', this.controlador.obtenerAnimal);
+        this.router.get('/', this.controlador.obtenerAnimalesPorRefugio);
         this.router.post('/', this.autenticacion, this.controlador.guardarAnimal);
         this.router.post('/carga/archivo', this.autenticacion, this.cargaArchivo.single('file'), this.controlador.guardarAnimalitos);
         this.router.put('/:id', this.autenticacion,this.controlador.actualizarAnimal); 

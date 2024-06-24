@@ -9,9 +9,9 @@ class IndexRouter {
         this.inicializarRutas();
     }
     inicializarRutas() {
-        this.router.use('/refugios', new RefugiosRouter().start());
-        this.router.use('/animalitos', new AnimalitosRouter().start());
         this.router.use('/autenticacion', new AutenticacionRouter().start());
+        this.router.use('/refugios', new RefugiosRouter().start());
+        this.router.use('/animalitos', new AnimalitosRouter().start());   
     }
     start() {
         return this.router;

@@ -14,6 +14,12 @@ class Servicio {
         return animalEncontrado;
     }
 
+    obtenerAnimalesPorRefugio = async (refugioID) => {
+        console.log(refugioID)
+        const animalesEncontrados = await this.modelo.obtenerAnimalesPorRefugio(refugioID);
+        return animalesEncontrados;
+    }
+
     obtenerAdoptables = async () => {
         const animalesDisponibles = await this.modelo.obtenerAdoptables();
         return animalesDisponibles

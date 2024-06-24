@@ -7,19 +7,18 @@ class Controlador {
         this.servicio = new Servicio();
     }
     
-    async obtenerRefugio(req, res) {
+    obtenerRefugio = async (req, res) => {
         try {
           // Obtener el token de la cabecera de autorización
           const token = req.headers.authorization.split(' ')[1];
-          
     
           // Verificar y decodificar el token para obtener el email del refugio
           const decoded = jwt.verify(token, config.JWT_SECRET);
           const id = decoded.id;
           // Si hay un ID en los parámetros, obtener un solo refugio por ID
-          console.log("id decodificado:", id);
+          
           if (id) {
-            const refugio = await this.Servicio.obtenerRefugio(id);
+            const refugio = await this.servicio.obtenerRefugio(id);
             if (!refugio) {
               throw new Error('Refugio no encontrado');
             }
@@ -32,7 +31,6 @@ class Controlador {
         }
       }
 
-    
     guardarRefugio = async (req, res) => {
         console.log(req.body)
         const refugio = req.body;

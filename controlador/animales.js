@@ -1,4 +1,6 @@
 import Servicio from '../servicio/animales.js';
+import jwt from 'jsonwebtoken';
+import config from '../config.js';
 import { ErrorAnimalInvalido, ErrorArchivoFaltante } from '../utils/errorPersonalizado.js';
 
 class Controlador {
@@ -10,6 +12,16 @@ class Controlador {
         const animal = await this.servicio.obtenerAnimal(id);
         res.json(animal);
     }
+
+    obtenerAnimalesPorRefugio = async (req, res) => {
+        const refugioID =  req.headers.authorization.split(' ')[1];
+        const decoded = jwt.verify(refugioID, config.JWT_SECRET);
+        const id = decoded.id;
+        console.log(id)
+        const animales = await this.servicio.obtenerAnimalesPorRefugio(id);
+        res.json(animales);
+    }
+
     obtenerAdoptables = async (req, res) => {
         const animalesDisponibles = await this.servicio.obtenerAdoptables();
         res.json(animalesDisponibles);
