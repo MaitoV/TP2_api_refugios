@@ -40,6 +40,7 @@ class Controlador {
     }
     guardarAnimalitos = async (req, res, next) => {
         try{
+            console.log("entro al controlador");
             const archivo = req.file;
             if(!archivo) throw new ErrorArchivoFaltante();
 

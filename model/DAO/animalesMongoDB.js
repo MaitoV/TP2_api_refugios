@@ -23,7 +23,7 @@ class ModelMongoDB {
     obtenerAnimalesPorRefugio = async (refugioID) => {
         if(!conexionMongoDB.conexionOk) return {}
         const animales = await conexionMongoDB.db.collection('animales').find({refugioID: new ObjectId(refugioID)}).toArray();
-        console.log(animales)
+       
         return animales;
     }
 

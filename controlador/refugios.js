@@ -32,7 +32,7 @@ class Controlador {
       }
 
     guardarRefugio = async (req, res) => {
-        console.log(req.body)
+
         const refugio = req.body;
         const refugioGuardado = await this.servicio.guardarRefugio(refugio);
         res.json(refugioGuardado);
