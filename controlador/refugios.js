@@ -10,9 +10,10 @@ class Controlador {
         res.json(refugios);
     }
     actualizarRefugio = async (req, res) => {
-        const {id} = req.params;
+        const refugioAModificarID = req.params.id;
         const refugio = req.body;
-        const refugioActualizado = await this.servicio.actualizarRefugio(id, refugio);
+        const refugioSolicitanteID = req.user.id;
+        const refugioActualizado = await this.servicio.actualizarRefugio(refugioAModificarID, refugio, refugioSolicitanteID);
         res.json(refugioActualizado);
     }
     obtenerInforme = async (req, res, error) => {
@@ -25,7 +26,6 @@ class Controlador {
             next(error)
         }
     }
-
 }
 
 export default Controlador;

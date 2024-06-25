@@ -30,6 +30,11 @@ export class ErrorRefugioNoPropietario extends ErrorPersonalizado {
     super(mensaje, 401);
   }
 }
+export class ErrorRefugioNoModificable extends ErrorPersonalizado {
+  constructor(mensaje = 'No tiene permisos para modificar un refugio del cual no es propietario') {
+    super(mensaje, 401);
+  }
+}
 export class ErrorArchivoFaltante extends ErrorPersonalizado {
   constructor(mensaje = 'No se ha subido ningún archivo') {
     super(mensaje, 400)
