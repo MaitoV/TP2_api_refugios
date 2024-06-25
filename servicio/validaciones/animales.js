@@ -1,7 +1,8 @@
 import Joi from 'joi';
 
 const animalSchema = Joi.object({
-  nombre: Joi.string().required().messages({
+  nombre: Joi.string().min(3).required().messages({
+    'string.min': 'El nombre debe tener al menos 3 letras',
     'string.empty': 'El nombre es requerido',
     'any.required': 'El nombre es obligatorio'
   }),
@@ -33,7 +34,8 @@ export const validarAnimal = (animal) => {
 };
 
 const animalActualizacionSchema = Joi.object({
-  nombre: Joi.string().optional().messages({
+  nombre: Joi.string().min(3).optional().messages({
+    'string.min': 'El nombre debe tener al menos 3 letras',
     'string.empty': 'El nombre es requerido',
     'any.required': 'El nombre es obligatorio'
   }),

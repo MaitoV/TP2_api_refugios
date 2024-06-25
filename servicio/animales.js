@@ -58,12 +58,16 @@ class Servicio {
         const animalEliminado = await this.modelo.eliminarAnimal(animalID);
         return animalEliminado;
     }
+
+
     #esRefugioPropietario = async (refugioID, animalID) => {
         let esPropietario = false;
 
         const animalEncontrado = await this.modelo.obtenerAnimal(animalID);
-        const refugioPropietario = animalEncontrado.refugioID.toString();
-        esPropietario = refugioPropietario === refugioID;
+        if(Object.keys(animalEncontrado).length != 0) {
+            const refugioPropietario = animalEncontrado.refugioID.toString();
+            esPropietario = refugioPropietario === refugioID;
+        }
 
         return esPropietario;
     }
@@ -71,7 +75,7 @@ class Servicio {
         const archivoExcel = new this.#exceljs.Workbook();
         await archivoExcel.xlsx.load(buffer);
         const hoja = archivoExcel.worksheets[0];
-        const data = [];
+        let data = [];
 
         hoja.eachRow({ includeEmpty: false }, (fila, rowNumber) => {
             const dataFila = {
@@ -84,7 +88,18 @@ class Servicio {
             data.push(dataFila);
         });
 
+        data = await this.#eliminarCabeceraDelExcel(data);
+        
         return data;
+    }
+    #eliminarCabeceraDelExcel = async (data) => {
+        let dataSinCabecera = data;
+        const nombreColumnasBaseDeDatos = await this.modelo.obtenerNombreDeColumnas();
+        const cabeceraArchivo = Object.values(data[0]);
+        const tieneCabecera = nombreColumnasBaseDeDatos.filter(atributo => cabeceraArchivo.includes(atributo));
+        if(tieneCabecera.length > 2) dataSinCabecera = data.slice(1)
+
+        return dataSinCabecera;
     }
 }
 

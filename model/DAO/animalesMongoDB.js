@@ -42,9 +42,14 @@ class ModelMongoDB {
     }
     eliminarAnimal = async (id) => {
         if(!conexionMongoDB.conexionOk) return {}
-
+        const animal = this.obtenerAnimal(id);
         const animalEliminado = await conexionMongoDB.db.collection('animales').deleteOne({ _id: new ObjectId(id) });
-        return animalEliminado;
+        return animal;
+    }
+    obtenerNombreDeColumnas = async() => {
+        const objeto = await conexionMongoDB.db.collection('animales').findOne();
+        const columnas = Object.keys(objeto) || ['nombre', 'edad', 'descripcion'];
+        return columnas;
     }
 }
 
