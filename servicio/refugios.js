@@ -1,11 +1,13 @@
 import RefugiosFactory from '../model/DAO/refugiosFactory.js';
 import AnimalesFactory from '../model/DAO/animalesFactory.js';
-import {ErrorRefugioNoModificable} from './../utils/ErrorPersonalizado.js';
+import {validarRefugioActualizacion} from './validaciones/refugios.js';
+import {ErrorRefugioNoModificable, ErrorDeValidacion} from './../utils/ErrorPersonalizado.js';
 
 class Servicio {
     constructor() {
         this.modeloRefugio = RefugiosFactory.get(process.env.MODO_PERSISTENCIA);
-        this.modeloAnimales = AnimalesFactory.get(process.env.MODO_PERSISTENCIA);        
+        this.modeloAnimales = AnimalesFactory.get(process.env.MODO_PERSISTENCIA); 
+        this.validarActualizacion = validarRefugioActualizacion;       
     }
 
     obtenerRefugios = async (id) => {
@@ -22,6 +24,8 @@ class Servicio {
     actualizarRefugio = async (refugioAModificarID, refugio, refugioSolicitanteID) => {
         const esRefugioPropietario = this.#esRefugioPropietario(refugioAModificarID, refugioSolicitanteID);
         if(!esRefugioPropietario) throw new ErrorRefugioNoModificable();
+        const esRefugioValido = this.validarActualizacion(refugio);
+        if(esRefugioValido.error) throw new ErrorDeValidacion(esRefugioValido.error)
         const refugioActualizado = await this.modeloRefugio.actualizarRefugio(refugioAModificarID, refugio);
         return refugioActualizado;
     }

@@ -9,12 +9,16 @@ class Controlador {
         const refugios = await this.servicio.obtenerRefugios(id);
         res.json(refugios);
     }
-    actualizarRefugio = async (req, res) => {
-        const refugioAModificarID = req.params.id;
-        const refugio = req.body;
-        const refugioSolicitanteID = req.user.id;
-        const refugioActualizado = await this.servicio.actualizarRefugio(refugioAModificarID, refugio, refugioSolicitanteID);
-        res.json(refugioActualizado);
+    actualizarRefugio = async (req, res, next) => {
+        try {
+            const refugioAModificarID = req.params.id;
+            const refugio = req.body;
+            const refugioSolicitanteID = req.user.id;
+            const refugioActualizado = await this.servicio.actualizarRefugio(refugioAModificarID, refugio, refugioSolicitanteID);
+            res.json(refugioActualizado);
+        } catch(error) {
+            next(error);
+        }
     }
     obtenerInforme = async (req, res, error) => {
         try {

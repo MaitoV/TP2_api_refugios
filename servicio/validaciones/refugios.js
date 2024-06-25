@@ -32,3 +32,30 @@ const validarRefugio = (refugio) => {
 };
 
 export default validarRefugio;
+
+const refugioActualizacionSchema = Joi.object({
+    nombre: Joi.string().min(5).optional().messages({
+        'string.min': 'El nombre debe tener al menos 5 caracteres.',
+        'string.empty': 'El nombre no puede estar vacío.'
+    }),
+    email: Joi.string().email().optional().messages({
+        'string.empty': 'El email no puede estar vacío.',
+        'string.email': 'El email debe tener un formato válido.'
+    }),
+    contrasenia: Joi.string().min(8).optional().messages({
+        'string.empty': 'La contraseña no puede estar vacía.',
+        'string.min': 'La contraseña debe tener al menos 8 caracteres.'
+    }),
+    telefono: Joi.string().pattern(/^\+5490?\d{9,10}$/).optional().messages({
+        'string.pattern.base': 'El teléfono debe tener un formato válido de número de Argentina (+549XXXXXXXXXX).',
+        'string.empty': 'El teléfono no puede estar vacío'
+    })
+});
+
+export const validarRefugioActualizacion = (refugio) => {
+    const { error, value } = refugioActualizacionSchema.validate(refugio, { abortEarly: false });
+    if (error) {
+        return { error: error.details.map(detail => detail.message).join(". ") };
+    }
+    return { value };
+};
