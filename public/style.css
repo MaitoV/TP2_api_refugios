@@ -274,3 +274,13 @@ tr:not(:first-child):hover {
   text-align: center;
   font-size: xx-large;
 }
+
+
+
+table button{
+  background-color: #4158d0;
+    color: white;
+    padding: 10px;
+    border-radius: 50px;
+    border-style: none;
+}
