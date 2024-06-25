@@ -75,11 +75,11 @@ class Servicio {
 
         hoja.eachRow({ includeEmpty: false }, (fila, rowNumber) => {
             const dataFila = {
-                nombre: fila.getCell(1).value,
+                nombre: fila.getCell(0).value,
+                clase: fila.getCell(1).value,
                 edad: fila.getCell(2).value,
-                estado: fila.getCell(3).value,
-                tipo: fila.getCell(4).value,
-                descripcion: fila.getCell(5).value,
+                raza: fila.getCell(3).value,
+                estado: fila.getCell(4).value,
             };
             data.push(dataFila);
         });

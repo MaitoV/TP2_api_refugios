@@ -117,7 +117,13 @@
   align-items: center;
 " >
     <img src="/lista.png" width="200px" alt="">
-    <button id="verMascotas">Ver todas las mascotas</button>
+    <p>Importación masiva (xls)</p>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" id="archivoExcel" name="archivoExcel" accept=".xlsx, .xls">
+      <button type="submit">Cargar archivo Excel</button>
+    </form>
+
   </div>
     
   </section>
@@ -128,6 +134,8 @@
 <script src="/scripts/mascota.js"></script>
 <script src="/scripts/tablaMascotas.js"></script>
 <script src="/scripts/main.js"></script>
+<script src="/scripts/upload.js"></script>
+
 
 
 </body>
