@@ -5,7 +5,6 @@ import { ErrorArchivoIncorrecto } from "../utils/errorPersonalizado.js";
 const storage = multer.memoryStorage();
 
 const filtroArchivo = (req, file, cb) => {
-    console.log("entro al middleware");
     const tiposArchivo = /xlsx|xls/;
     const extension = tiposArchivo.test(path.extname(file.originalname).toLowerCase());
 
@@ -18,7 +17,7 @@ const filtroArchivo = (req, file, cb) => {
 
 const cargarUnArchivoExcel = multer({ 
     storage: storage,
-    fileFilter: filtroArchivo
+    fileFilter: filtroArchivo,
 }).single('file');
 
 export default cargarUnArchivoExcel;

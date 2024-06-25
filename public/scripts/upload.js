@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const fileInput = document.getElementById('archivoExcel');
       const file = fileInput.files[0];
       formData.append('archivoExcel', file);
-      console.log("construye bien el archivo")
       try {
         const response = await fetch('/api/animalitos/carga/archivo', {
           method: 'POST',
