@@ -26,7 +26,7 @@ const refugioSchema = Joi.object({
 const validarRefugio = (refugio) => {
     const { error, value } = refugioSchema.validate(refugio, { abortEarly: false });
     if (error) {
-          return { error: error.details.map(detail => detail.message) };
+          return { error: error.details.map(detail => detail.message).join(". ")  };
     }
         return { value };
 };

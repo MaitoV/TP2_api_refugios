@@ -1,13 +1,15 @@
 import ModelFactory from '../model/DAO/animalesFactory.js';
 import { ErrorRefugioNoPropietario, ErrorDeValidacion } from '../utils/errorPersonalizado.js';
 import exceljs from 'exceljs';
-import validar from './validaciones/animales.js';
+import {validarAnimal, validarActualizacionAnimal} from './validaciones/animales.js';
 
 class Servicio {
     #exceljs;
     constructor() {
         this.modelo = ModelFactory.get(process.env.MODO_PERSISTENCIA);
         this.#exceljs = exceljs;
+        this.validar = validarAnimal;
+        this.validarActualizacion = validarActualizacionAnimal;
     }
 
     obtenerAnimal = async (id) => {
@@ -21,7 +23,7 @@ class Servicio {
     }
     
     guardarAnimal = async (animal, refugioID) => {
-        const esAnimalValido = validar(animal);
+        const esAnimalValido = this.validar(animal);
         if(esAnimalValido.error) throw new ErrorDeValidacion(esAnimalValido.error)
         animal.refugioID = refugioID;
         const animalGuardado = await this.modelo.guardarAnimal(animal);
@@ -42,9 +44,9 @@ class Servicio {
     
     actualizarAnimal = async (animalID, animal, refugioID) => {
         const esRefugioPropietario = await this.#esRefugioPropietario(refugioID, animalID);
-        if(!esRefugioPropietario) {
-            throw new ErrorRefugioNoPropietario();
-        }
+        if(!esRefugioPropietario) throw new ErrorRefugioNoPropietario();
+        const esAnimalValido = this.validarActualizacion(animal);
+        if(esAnimalValido.error) throw new ErrorDeValidacion(esAnimalValido.error)
         const animalActualizado = await this.modelo.actualizarAnimal(animalID, animal);
         return animalActualizado;
     }

@@ -40,11 +40,6 @@ export class ErrorArchivoIncorrecto extends ErrorPersonalizado {
     super(mensaje, 400)
   }
 }
-export class ErrorRefugioInvalido extends ErrorPersonalizado {
-  constructor(mensaje) {
-    super(mensaje, 400)
-  }
-}
 export class ErrorDeValidacion extends ErrorPersonalizado {
   constructor(mensaje) {
     super(mensaje, 400)
