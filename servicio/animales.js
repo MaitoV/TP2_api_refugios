@@ -15,7 +15,7 @@ class Servicio {
     }
 
     obtenerAnimalesPorRefugio = async (refugioID) => {
-        console.log(refugioID)
+      
         const animalesEncontrados = await this.modelo.obtenerAnimalesPorRefugio(refugioID);
         return animalesEncontrados;
     }

@@ -17,7 +17,6 @@ class Controlador {
         const refugioID =  req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(refugioID, config.JWT_SECRET);
         const id = decoded.id;
-        console.log(id)
         const animales = await this.servicio.obtenerAnimalesPorRefugio(id);
         res.json(animales);
     }
