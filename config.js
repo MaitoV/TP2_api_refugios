@@ -7,6 +7,8 @@ const MONGO_STRING_CONEXION = process.env.MONGO_STRING_CONEXION || 'mongodb://12
 const MONGO_BASE = process.env.MONGO_BASE || 'test';
 const JWT_SECRET = process.env.JWT_SECRET || 'mi-frase-secreta';
 const MODO_NOTIFICACION = process.env.MODO_NOTIFICACION; 
+const MJ_APIKEY_PUBLIC = process.env.MJ_APIKEY_PUBLIC; 
+const MJ_APIKEY_PRIVATE = process.env.MJ_APIKEY_PRIVATE; 
 
 export default {
     PORT,
@@ -14,5 +16,7 @@ export default {
     MONGO_STRING_CONEXION,
     MONGO_BASE,
     JWT_SECRET,
-    MODO_NOTIFICACION  
+    MODO_NOTIFICACION,
+    MJ_APIKEY_PUBLIC,
+    MJ_APIKEY_PRIVATE
 }

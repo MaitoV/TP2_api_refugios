@@ -2,12 +2,14 @@ import RefugiosFactory from '../model/DAO/refugiosFactory.js';
 import AnimalesFactory from '../model/DAO/animalesFactory.js';
 import {validarRefugioActualizacion} from './validaciones/refugios.js';
 import {ErrorRefugioNoModificable, ErrorDeValidacion} from './../utils/ErrorPersonalizado.js';
+import Notificacion from './../utils/Notificacion.js';
 
 class Servicio {
     constructor() {
         this.modeloRefugio = RefugiosFactory.get(process.env.MODO_PERSISTENCIA);
         this.modeloAnimales = AnimalesFactory.get(process.env.MODO_PERSISTENCIA); 
-        this.validarActualizacion = validarRefugioActualizacion;       
+        this.validarActualizacion = validarRefugioActualizacion;   
+        this.notificar = new Notificacion();    
     }
 
     obtenerRefugios = async (id) => {
@@ -31,10 +33,13 @@ class Servicio {
     }
     obtenerInforme = async (refugioID) => {
         const animales = await this.modeloAnimales.obtenerAnimalesPorRefugio(refugioID);
+        const {email, nombre} = await this.modeloRefugio.obtenerRefugio(refugioID);
         const estadisticas = this.#procesarEstadisticas(animales);
         const mensaje = this.#formatearMensajeEstadisticas(estadisticas);
-        await this.notificar.enviarMensaje();
-        return mensaje;
+        console.log(estadisticas);
+        await this.notificar.enviarInforme(email, nombre, mensaje);
+        const mensajeConfirmacion = `Informe enviado al email: ${email}`;
+        return mensajeConfirmacion;
         
     }
     #procesarEstadisticas = (animales) => {

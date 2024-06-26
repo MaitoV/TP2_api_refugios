@@ -20,7 +20,7 @@ class Controlador {
             next(error);
         }
     }
-    obtenerInforme = async (req, res, error) => {
+    obtenerInforme = async (req, res, next) => {
         try {
             const refugioID = req.user.id;
             const informe = await this.servicio.obtenerInforme(refugioID);

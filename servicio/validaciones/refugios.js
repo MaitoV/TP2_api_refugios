@@ -1,4 +1,4 @@
-import Joi from 'joi'
+import Joi from 'joi';
 
 const refugioSchema = Joi.object({
     nombre: Joi.string().min(5).required().messages({
