@@ -37,6 +37,10 @@
           <li class="nav__item" ">
             <a class="btn" href="/dashboard" style="background-color: black;">Dashboard</a>
           </li>
+
+          <li class="nav__item" ">
+            <a class="btn" href="/" style="background-color: white; color:black;">Cerrar sesión</a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -130,12 +134,17 @@
 
   <div id="tablaMascotasContainer"></div>
 
+  <div class="tarjeta" style="text-align: center; display: flex; flex-direction: column; align-items: center; margin: auto; height: fit-content;">
+    <canvas id="mascotasChart" width="400" height="400"></canvas>
+  </div>
+
   <script src="/scripts/refugio.js"></script>
 <script src="/scripts/mascota.js"></script>
 <script src="/scripts/tablaMascotas.js"></script>
 <script src="/scripts/main.js"></script>
 <script src="/scripts/upload.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/scripts/chart.js"></script>
 
 
 </body>

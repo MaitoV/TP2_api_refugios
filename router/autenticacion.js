@@ -9,6 +9,7 @@ class Router {
     start() {
         this.router.post('/ingresar', this.controlador.ingresar);
         this.router.post('/registrarme', this.controlador.registrarme);
+
         return this.router;
     }
 }

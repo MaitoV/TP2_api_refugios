@@ -35,6 +35,24 @@ class Controlador {
         }
     }
 
+    cerrarSesion = async (req, res, next) => {
+        try {
+            req.session.destroy(err => {
+                if (err) {
+                  return res.status(500).send('No se pudo cerrar la sesión.');
+                }
+                console.log("pasa por aca")
+                res.clearCookie('token'); 
+                res.send('Sesión cerrada.');
+              });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+
+
+
 }
 
 export default Controlador;
