@@ -275,7 +275,12 @@ tr:not(:first-child):hover {
   font-size: xx-large;
 }
 
-
+#tablaMascotasContainer>p{
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
 
 table button{
   background-color: #4158d0;
@@ -284,3 +289,4 @@ table button{
     border-radius: 50px;
     border-style: none;
 }
+
